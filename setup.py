@@ -15,7 +15,7 @@ def get_requirements(filepath = "requirements.txt"):
             requirements.remove(HYPHEN_E_DOT)
         return requirements
     
-project_name = "project_name"
+project_name = "chest-disease-classification"
 __version__ = "0.0.1"
 AUTHOR_NAME = "Linkan Kumar Sahu"
 AUTHOR_EMAIL = "sahulinkan7@gmail.com",

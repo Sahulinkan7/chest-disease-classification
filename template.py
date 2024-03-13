@@ -17,9 +17,12 @@ list_of_files=[
     f"src/logger.py",
     f"src/exception.py",
     f"notebooks/trials.ipynb",
+    f"config/config.yaml",
     f"setup.py",
     f"requirements.txt",
     f"requirements_dev.txt",
+    f"dvc.yaml",
+    f"params.yaml",
     f"tests/__init__.py",
     f"tests/integration/__init__.py",
     f"tests/unit/__init__.py"
