@@ -19,7 +19,7 @@ class DataIngestion:
         try:
             data_source_url=self.data_ingestion_config.source_url
             download_dir = self.data_ingestion_config.local_data_file
-            os.makedirs(os.path.dirname(download_dir))
+            os.makedirs(os.path.dirname(download_dir),exist_ok=True)
             file_id = data_source_url.split("/")[-2]
             prefix="https://drive.google.com/uc?/export=download&id="
             gdown.download(prefix+file_id,download_dir)

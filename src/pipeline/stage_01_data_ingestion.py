@@ -18,3 +18,14 @@ class DataIngestionPipeline:
             data_ingestion.extract_downloaded_data()
         except Exception as e:
             raise CustomException(e,sys)
+        
+STAGE_NAME="Data Ingestion Stage"
+if __name__=="__main__":
+    try:
+        logging.info(f"{'>>'*10} Stage {STAGE_NAME} started {'<<'*10}")
+        data_ingestion_pipeline=DataIngestionPipeline()
+        data_ingestion_pipeline.initiate_data_ingestion()
+        logging.info(f"{'>>'*10} Stage {STAGE_NAME} completed {'<<'*10}")
+    except Exception as e:
+        logging.exception(f"")
+        raise CustomException(e,sys)
