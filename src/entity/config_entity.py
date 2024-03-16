@@ -23,3 +23,15 @@ class PrepareBaseModelConfig:
     params_classes = params_file_content['CLASSES']
     params_learning_rate = params_file_content['LEARNING_RATE']
     params_include_top : bool = params_file_content['INCLUDE_TOP']
+    
+
+@dataclass
+class ModelTrainingConfig:
+    root_dir: Path = config_file_content['training']['root_dir']
+    trained_model_path: Path = config_file_content['training']['trained_model_path']
+    updated_base_model_path : Path = config_file_content['prepare_base_model']['updated_base_model_path']
+    training_data: Path = config_file_content['data_ingestion']['unzip_dir']
+    params_epochs: int = params_file_content['EPOCHS']
+    params_batch_size: int = params_file_content['BATCH_SIZE']
+    params_is_augmentation: bool = params_file_content['AUGMENTATION']
+    params_image_size: list = params_file_content['IMAGE_SIZE']
