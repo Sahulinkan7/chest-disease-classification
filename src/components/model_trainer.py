@@ -12,6 +12,7 @@ class ModelTrainer:
             os.makedirs(self.model_trainer_config.root_dir,exist_ok=True)
             logging.info(f"Model Trainer object created")
         except Exception as e:
+            logging.exception(f"Model Trainer object creation failed due to {CustomException(e,sys)}")
             raise CustomException(e,sys)
         
     def get_base_model(self):
