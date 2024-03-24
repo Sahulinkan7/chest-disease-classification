@@ -1,0 +1,86 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 1f94f28b359c6b97ff8844ae68f30252
+      size: 613
+    - path: src/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: 922778eb27cc813275bdcc8f1e6cef02
+      size: 1140
+    outs:
+    - path: artifacts/data_ingestion/extracted_data
+      hash: md5
+      md5: 33f500f7554b4f84effebff6a8fade9b.dir
+      size: 49247431
+      nfiles: 343
+    - path: artifacts/data_ingestion/raw_data
+      hash: md5
+      md5: c95b02e414686b622c35593470d7d895.dir
+      size: 48958459
+      nfiles: 1
+  prepare_base_model:
+    cmd: python src/pipeline/stage_02_prepare_base_model.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 1f94f28b359c6b97ff8844ae68f30252
+      size: 613
+    - path: src/pipeline/stage_02_prepare_base_model.py
+      hash: md5
+      md5: 4f3087c96507177a2b4e96684b7e373c
+      size: 1212
+    params:
+      params.yaml:
+        CLASSES: 2
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.01
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepared_base_model
+      hash: md5
+      md5: df5c9275d6297b11ec7ed21217b6cebc.dir
+      size: 118054560
+      nfiles: 2
+  training:
+    cmd: python src/pipeline/stage_03_model_trainer.py
+    deps:
+    - path: artifacts/data_ingestion/extracted_data/Chest-CT-Scan-data
+      hash: md5
+      md5: 904fa45d934ce879b3b1933dca6cb2f1.dir
+      size: 49247431
+      nfiles: 343
+    - path: artifacts/prepared_base_model
+      hash: md5
+      md5: df5c9275d6297b11ec7ed21217b6cebc.dir
+      size: 118054560
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: 1f94f28b359c6b97ff8844ae68f30252
+      size: 613
+    - path: src/pipeline/stage_03_model_trainer.py
+      hash: md5
+      md5: dbb62f0d3f2bf803ff7831068849f93b
+      size: 1298
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 8
+        EPOCHS: 2
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/trained_model/model.h5
+      hash: md5
+      md5: 0974b268834ea9fe666c6d379d1d32e1
+      size: 59337520

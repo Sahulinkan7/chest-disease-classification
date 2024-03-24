@@ -1,5 +1,6 @@
 from src.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 from src.pipeline.stage_02_prepare_base_model import PrepareBaseModelPipeline
+from src.pipeline.stage_03_model_trainer import ModelTrainerPipeline
 from src.logger import logging
 import os, sys
 from src.exception import CustomException
@@ -20,6 +21,17 @@ try:
     logging.info(f"{'>>'*10} Stage {STAGE_NAME} started {'<<'*10}")
     prepare = PrepareBaseModelPipeline()
     prepare.initiate_prepare_base_model()
+    logging.info(f"{'>>'*10} Stage {STAGE_NAME} completed {'<<'*10}")
+except Exception as e:
+    logging.exception(f"Stage {STAGE_NAME} interrupted due to {CustomException(e,sys)}")
+    raise CustomException(e, sys)
+
+
+STAGE_NAME = "Model Training"
+try:
+    logging.info(f"{'>>'*10} Stage {STAGE_NAME} started {'<<'*10}")
+    modeltraining = ModelTrainerPipeline()
+    modeltraining.inititate_model_training()
     logging.info(f"{'>>'*10} Stage {STAGE_NAME} completed {'<<'*10}")
 except Exception as e:
     logging.exception(f"Stage {STAGE_NAME} interrupted due to {CustomException(e,sys)}")
